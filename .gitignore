@@ -1,0 +1,7 @@
+# Never commit anyone's export or results
+sycophancy-check-results/
+private/
+*.jsonl
+*.zip
+conversations*.json
+__pycache__/
