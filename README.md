@@ -1,4 +1,4 @@
-# ChatGPT Export Sycophancy Check
+# ChatGPT Export Deep Read
 
 **Was it flattery? Was it you? Ask your own record.**
 
@@ -90,13 +90,13 @@ The comparison shows you what the switched messages had **in common**, and how t
    ollama pull gemma4:12b
    ```
 
-2. Put `sycophancy_check.py` in the same folder as your export zip.
+2. Put `deep_read.py` in the same folder as your export zip.
 
 3. Open a terminal in that folder and try a small run first:
 
    ```
-   python sycophancy_check.py replies --sample 20
-   python sycophancy_check.py triggers --sample 20
+   python deep_read.py replies --sample 20
+   python deep_read.py triggers --sample 20
    ```
 
    (On some computers it's `python3`.) If your export is elsewhere, give the path after the job name.
@@ -104,7 +104,7 @@ The comparison shows you what the switched messages had **in common**, and how t
 4. When you're ready, run the full size (drop `--sample 20`). To check one reader against another, add a second model:
 
    ```
-   python sycophancy_check.py replies --second-model <another model>
+   python deep_read.py replies --second-model <another model>
    ```
 
    Pick a model from a different family to the first (a Qwen model beside a Gemma, say), so the two readers don't share the same habits.
@@ -117,10 +117,10 @@ To see how many replies or messages would be read, without reading any, add `--c
 
 ## Your Results
 
-Everything goes in a folder called `sycophancy-check-results`:
+Everything goes in a folder called `deep-read-results`:
 
 ```
-sycophancy-check-results/
+deep-read-results/
 ├── replies-report.txt     (the table you saw in the terminal)
 ├── replies-report.csv     (the same numbers, for a spreadsheet)
 ├── triggers-report.txt
@@ -205,7 +205,7 @@ So the `triggers` report can show you what your switched messages had in common.
 Replace the default windows with your own:
 
 ```
-python sycophancy_check.py replies --window before:2025-03-01:2025-03-20 --window the_week:2025-03-21:2025-03-27 --window after:2025-03-28:2025-04-20
+python deep_read.py replies --window before:2025-03-01:2025-03-20 --window the_week:2025-03-21:2025-03-27 --window after:2025-03-28:2025-04-20
 ```
 
 Each window is `name:start:end`, dates inclusive. Keep the rolled-back version in as your check if you can:

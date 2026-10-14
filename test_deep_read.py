@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Self-check with an invented export and a pretend Ollama. No real data, no real model.
-Run:  python test_sycophancy_check.py   (prints OK if all is well)"""
+Run:  python test_deep_read.py   (prints OK if all is well)"""
 import datetime as dt
 import http.server
 import json
@@ -14,7 +14,7 @@ import threading
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import sycophancy_check as sc
+import deep_read as sc
 
 
 def t(day, hour=12):
@@ -99,7 +99,7 @@ class FakeOllama(http.server.BaseHTTPRequestHandler):
 
 
 def run(job, path, url, out, *extra):
-    r = subprocess.run([sys.executable, os.path.join(HERE, "sycophancy_check.py"), job, path,
+    r = subprocess.run([sys.executable, os.path.join(HERE, "deep_read.py"), job, path,
                         "--model", "fake:1b", "--ollama", url, "--out", out] + list(extra),
                        capture_output=True, text=True, timeout=120)
     assert r.returncode == 0, r.stderr

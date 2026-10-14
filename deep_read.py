@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ChatGPT Export Sycophancy Check
+ChatGPT Export Deep Read
 Read your own GPT-4o conversations with a local AI model, and see what the
 numbers say: how 4o's replies changed over time, and what you had written
 just before the safety router switched a reply away from 4o.
@@ -16,8 +16,8 @@ Your messages are read by the local model only. The reports hold numbers,
 never message text.
 
 Usage:
-    python sycophancy_check.py replies  [path/to/export] [options]
-    python sycophancy_check.py triggers [path/to/export] [options]
+    python deep_read.py replies  [path/to/export] [options]
+    python deep_read.py triggers [path/to/export] [options]
 
 The export can be the .zip OpenAI sent you, a folder, or conversations.json.
 With no path, it looks in the current folder.
@@ -29,7 +29,7 @@ Common options:
     --second-n N          how many per window or group it re-reads (default 50)
     --sample N            how many to draw per window or group (default 200)
     --seed N              random seed; the same seed draws the same sample
-    --out FOLDER          where results go (default: sycophancy-check-results)
+    --out FOLDER          where results go (default: deep-read-results)
     --ollama URL          where Ollama listens (default: http://127.0.0.1:11434)
     --count-only          draw the sample and show the counts, without reading anything
 
@@ -387,7 +387,7 @@ def report_replies(sample, windows, totals, first, second, args, endear):
     # Endearments are counted fresh from the text every time, so changing --endearments
     # always changes the report, even for replies that were read on an earlier run.
     is_endear = {i: bool(endear.search(s["reply"])) if endear else False for i, s in by_id.items()}
-    lines = ["ChatGPT Export Sycophancy Check %s - replies" % VERSION,
+    lines = ["ChatGPT Export Deep Read %s - replies" % VERSION,
              "Reader: %s   Sample: up to %d per window   Seed: %d" % (args.model, args.sample, args.seed),
              "Each number is the share of 4o's replies in that window where the reader answered yes.",
              ""]
@@ -580,7 +580,7 @@ def score_triggers(reader, sample, path, limit=None):
 
 def report_triggers(sample, lo, hi, first, second, args):
     day = lambda t: dt.datetime.fromtimestamp(t, dt.timezone.utc).strftime("%d %b %Y")
-    lines = ["ChatGPT Export Sycophancy Check %s - triggers" % VERSION,
+    lines = ["ChatGPT Export Deep Read %s - triggers" % VERSION,
              "Reader: %s   Dates: %s to %s (UTC)   Seed: %d" % (args.model, day(lo), day(hi - 1), args.seed),
              "Each number is the share of messages in that group where the reader answered yes.",
              ""]
@@ -651,7 +651,7 @@ def find_export(path):
         if name.lower().endswith(".zip") or CONV_NAME.match(name):
             return name
     sys.exit("No export found here. Give the path, for example:\n"
-             "  python sycophancy_check.py replies path/to/your-export.zip")
+             "  python deep_read.py replies path/to/your-export.zip")
 
 
 def save(out, name, lines, header, rows):
@@ -684,7 +684,7 @@ def main():
     p.add_argument("--second-n", type=int, default=50)
     p.add_argument("--sample", type=int, default=200)
     p.add_argument("--seed", type=int, default=20260927)
-    p.add_argument("--out", default="sycophancy-check-results")
+    p.add_argument("--out", default="deep-read-results")
     p.add_argument("--ollama", default="http://127.0.0.1:11434")
     p.add_argument("--window", action="append")
     p.add_argument("--endearments", default=DEFAULT_ENDEARMENTS)

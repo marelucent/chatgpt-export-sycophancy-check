@@ -1,5 +1,5 @@
 # Never commit anyone's export or results
-sycophancy-check-results/
+deep-read-results/
 private/
 *.jsonl
 *.zip
